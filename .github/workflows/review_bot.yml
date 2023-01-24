@@ -1,0 +1,18 @@
+name: review check
+on:
+  pull_request:
+    paths: README.md
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          gh api \
+            --method POST \
+            -H "Accept: application/vnd.github+json" \
+            /repos/mai-nakagawa/test/pulls/1/comments \
+            -f body='Great stuff!' \
+            -f commit_id='f3c06e15d3c44aa7271cdf89a09d783ed8136179' \
+            -f path='README.md' \
+            -F line=1
