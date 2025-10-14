@@ -8,7 +8,7 @@ on:
         required: true
         type: string
 
-run-name: 'Trigger deployment ({{ inputs.release_target_date }})'
+run-name: "create_dataset_skome_training: release_target_date=${{ inputs.release_target_date }}"
 
 jobs:
   trigger_deployment:
