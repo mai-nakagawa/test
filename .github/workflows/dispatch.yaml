@@ -1,0 +1,23 @@
+name: dispatch
+
+on:
+  workflow_dispatch:
+    inputs:
+      approved:
+        description: "Deployment approved?"
+        required: true
+        type: boolean
+      release_target_date:
+        description: "Release target date (YYYY-MM-01)"
+        required: true
+        type: string
+
+jobs:
+  trigger_deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger deployment
+        run: |
+          echo "Triggering deployment..."
+          echo "Approved: ${{ inputs.approved }}"
+          echo "Release target date: ${{ inputs.release_target_date }}"
