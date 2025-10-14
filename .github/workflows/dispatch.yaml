@@ -3,10 +3,6 @@ name: dispatch
 on:
   workflow_dispatch:
     inputs:
-      approved:
-        description: "Deployment approved?"
-        required: true
-        type: boolean
       release_target_date:
         description: "Release target date (YYYY-MM-01)"
         required: true
@@ -19,5 +15,4 @@ jobs:
       - name: Trigger deployment
         run: |
           echo "Triggering deployment..."
-          echo "Approved: ${{ inputs.approved }}"
           echo "Release target date: ${{ inputs.release_target_date }}"
