@@ -11,6 +11,7 @@ on:
 jobs:
   trigger_deployment:
     runs-on: ubuntu-latest
+    environment: trigger_job_on_production
     steps:
       - name: Trigger deployment
         run: |
