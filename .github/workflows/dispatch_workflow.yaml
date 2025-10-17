@@ -6,11 +6,11 @@ on:
       discounted_interest_training:
         type: boolean
         required: true
-        description: "引き下げ金利モデルを学習するときはチェックを入れる"
+        description: "引き下げ金利モデルを学習する"
       table_suffix:
         type: string
         required: false
-        description: "テーブル名の末尾に追加する文字列。通常は省略"
+        description: "テーブル名の末尾に追加する文字列（通常は省略）"
 
 jobs:
   sample:
