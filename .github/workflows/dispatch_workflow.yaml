@@ -3,7 +3,7 @@ name: dispatch_workflow
 on:
   workflow_dispatch:
     inputs:
-      abc:
+      discounted_interest_training:
         type: boolean
         required: true
       table_suffix:
@@ -14,5 +14,6 @@ jobs:
   sample:
     runs-on: ubuntu-latest
     steps:
-      - name: hello
-        run: echo "Hello, world! ${{ inputs.abc }} ${{ inputs.table_suffix }}"
+      - run: |
+          echo "table_suffix: \"${{ inputs.table_suffix }}\"" #（通常は空文字列）
+          echo "discounted_interest_training: \"${{ inputs.discounted_interest_training }}\"" #（引き下げ金利モデルを学習するときはtrue）
