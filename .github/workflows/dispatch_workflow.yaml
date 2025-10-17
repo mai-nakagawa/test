@@ -1,0 +1,59 @@
+name: dispatch_workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      discounted_interest_training:
+        type: boolean
+        required: true
+        description: "引き下げ金利モデルを学習する"
+      table_suffix:
+        type: string
+        required: false
+        description: "テーブル名の末尾に追加する文字列（通常は省略）"
+
+jobs:
+  check_parameters:
+    name: "!!パラメータを確認してください!!"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Python
+        uses: actions/setup-python@7f4fc3e22c37d6ff65e88745f38bd3157c663f7c # v4.9.1
+        with:
+          python-version: "3.10"  # Any version is fine. `uv` will use the Python version specified in pyproject.toml
+
+      - name: Install python-dateutil
+        run: pip install python-dateutil
+          
+      - name: Setup parameters
+        shell: python
+        run: |
+          import os
+          from datetime import datetime
+          from dateutil.relativedelta import relativedelta
+          from zoneinfo import ZoneInfo
+
+          now_jst = datetime.now(ZoneInfo("Asia/Tokyo"))
+          release_target_date = (now_jst.replace(day=1) + relativedelta(months=1)).strftime("%Y-%m-%d")
+          use_month_for_skome_prediction = (now_jst - relativedelta(days=2)).strftime("%Y-%m-%d")
+
+          with open(os.environ["GITHUB_ENV"], "a") as f:
+            f.write(f"release_target_date={release_target_date}\n")
+            f.write(f"use_month_for_skome_prediction={use_month_for_skome_prediction}\n")
+
+      - name: "!!パラメータを確認してください!!"
+        run: |
+          echo "-------------- 以下のパラメータを確認してください ----------------"
+          echo "実行環境: "; if [ ${{ github.ref }} == "refs/heads/main" ]; then echo \"prod\"; else echo \"dev\"; fi
+          echo "release_target_date: \"$release_target_date\""（翌月1日になっているか確認）
+          echo "use_month_for_skome_prediction: \"$use_month_for_skome_prediction\""（2日前になっているか確認）
+          echo "table_suffix: \"${{ inputs.table_suffix }}\"" （通常は空文字列）
+          echo "discounted_interest_training: \"${{ inputs.discounted_interest_training }}\"" （引き下げ金利モデルを学習するときはtrue）
+          echo "------------------------------------------------------------"
+
+  trigger:
+    runs-on: ubuntu-latest
+    needs: check_parameters
+    environment: trigger_job_on_production
+    steps:
+      - run: echo triggered!!
