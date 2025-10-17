@@ -44,6 +44,7 @@ jobs:
       - name: "!!パラメータを確認してください!!"
         run: |
           echo "-------------- 以下のパラメータを確認してください ----------------"
+          if [ ${{ github.ref }} == "refs/heads/main" ]; then echo "実行環境: \"prod\""; else echo "リリース先: \"dev\""; fi
           echo "release_target_date: \"$release_target_date\""（翌月1日になっているか確認）
           echo "use_month_for_skome_prediction: \"$use_month_for_skome_prediction\""（2日前になっているか確認）
           echo "table_suffix: \"${{ inputs.table_suffix }}\"" （通常は空文字列）
