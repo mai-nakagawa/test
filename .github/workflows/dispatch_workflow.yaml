@@ -34,8 +34,8 @@ jobs:
           from zoneinfo import ZoneInfo
 
           now_jst = datetime.now(ZoneInfo("Asia/Tokyo"))
-          release_target_date = now_jst.replace(day=1) + relativedelta(months=1)
-          use_month_for_skome_prediction = now_jst - relativedelta(days=2)
+          release_target_date = (now_jst.replace(day=1) + relativedelta(months=1)).strftime("%Y-%m-%d")
+          use_month_for_skome_prediction = (now_jst - relativedelta(days=2)).strftime("%Y-%m-%d")
 
           with open(os.environ["GITHUB_ENV"], "a") as f:
             f.write(f"release_target_date={release_target_date}\n")
