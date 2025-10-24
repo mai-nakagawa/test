@@ -17,5 +17,5 @@ jobs:
         run: |
           pip install --upgrade pip
           pip install uv
-          find /usr -type f -name uv
           uv init
+          which uv
