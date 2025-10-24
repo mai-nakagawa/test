@@ -1,0 +1,21 @@
+name: nakagawa test
+
+on:
+  push:
+    branches: [ci-test]
+
+jobs:
+  nakagawa-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Python
+        uses: actions/setup-python@7f4fc3e22c37d6ff65e88745f38bd3157c663f7c # v4.9.1
+        with:
+          python-version: 3.9
+
+      - name: Install uv
+        run: |
+          pip install --upgrade pip
+          pip install uv
+          find /usr -type f -name uv
+          uv init
