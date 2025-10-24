@@ -19,3 +19,4 @@ jobs:
           pip install uv
           uv init
           which uv
+          echo $PATH
