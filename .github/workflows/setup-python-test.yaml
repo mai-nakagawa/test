@@ -18,5 +18,6 @@ jobs:
           pip install --upgrade pip
           pip install uv
           uv init
+          which pip
           which uv
           echo $PATH
